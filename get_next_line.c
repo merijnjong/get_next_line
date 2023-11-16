@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/16 17:57:09 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/16 18:17:32 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ char	*write_first_line(int fd)
 
 int	main(void)
 {
-	int	fd;
-	ssize_t result;
+	int		fd;
+	ssize_t	result;
 
 	fd = open("text.txt", O_RDONLY);
 	result = count_first_line(fd);
