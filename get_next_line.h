@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:07:12 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/16 17:51:18 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/23 17:38:20 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 #include <sys/types.h>
 #include <sys/uio.h>
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 300
+#define BUFFER_SIZE 5
 #endif
 // ssize_t	read_result(int fd);
-// char	*write_from_fd(int fd);
+char	*get_next_line(int fd);
 
-ssize_t	count_first_line(int fd);
-char 	*write_first_line(int fd);
-
+// ssize_t	count_first_line(int fd);
+char	*ft_strjoin(char const *s1, char const *s2);
+int		ft_strlen(const char *str);
+char	*ft_strchr(const char *s, int c);
+char	*ft_free(char **str);
 #endif
