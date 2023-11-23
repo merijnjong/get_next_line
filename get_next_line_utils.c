@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:47 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/23 17:38:08 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/23 18:12:29 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ int	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	if (str != NULL)
 	{
-		i++;
+		while (str[i] != '\0')
+		{
+			i++;
+		}
 	}
 	return (i);
 }
@@ -31,26 +34,22 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	size_t	totlen;
 	char	*str;
 
-	i = 0;
-	j = 0;
-	totlen = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(totlen + 1);			// allocate
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	str = (char *)malloc(i + j + 1);			// allocate
 	if (!str)
 		return (NULL);
-	str[0] = '\0';
-	while (s1[i] != '\0')
+	str[i + j] = '\0';
+	while (j--)
+	{
+		str[i + j] = s2[j];
+	}
+	while (i--)
 	{
 		str[i] = s1[i];
-		i++;
 	}
-	while (s2[j] != '\0')
-	{
-		str[i] = s2[j];
-		i++;
-		j++;
-	}
-	str[i] = '\0';
-	// free(str);								// free
+	if (s1 != NULL)
+		free((void *)s1);							// free
 	return (str);
 }
 

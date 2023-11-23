@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/23 17:38:45 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/23 18:25:08 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,14 @@ char	*three_remainder(char *staticbuf)
 
 	i = 0;
 	j = 0;
-	while (staticbuf[i] != '\n')
+	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
 	{
 		i++;
 	}
-	while (staticbuf[i] == '\n')
-	{
-		i++;
-	}
-	new = (char *)malloc(ft_strlen((staticbuf) - i + 1));	// allocate D
+	new = (char *)malloc(ft_strlen(staticbuf) - i + 1);		// allocate D
 	if (!new)
 	{
-		ft_free(&staticbuf);								// free if it fails
+		return (ft_free(&staticbuf));						// free if it fails
 	}
 	new[0] = '\0';
 	while (staticbuf[i] != '\0')
@@ -42,7 +38,7 @@ char	*three_remainder(char *staticbuf)
 	}
 	new[j] = '\0';
 	// printf("test func three: %s\n", new);
-	free(staticbuf);										// free A
+	free(staticbuf);								- i +		// free A
 	staticbuf = NULL;
 	return (new);
 }
@@ -53,18 +49,22 @@ char	*two_writeline(char *staticbuf)
 	char *line;
 
 	i = 0;
-	while (staticbuf[i] != '\n' || !staticbuf)
+	if (!staticbuf)
+	{
+		return (ft_strjoin(line, ""));
+	}
+	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
 	{
 		i++;
 	}
 	line = (char *)malloc(i + 1);							// allocate C
 	if (!line)
 	{
-		ft_free(&staticbuf);								// free if it fails
+		return (ft_free(&staticbuf));						// free if it fails
 	}
 	line[0] = '\0';
 	i = 0;
-	while (staticbuf[i] != '\n')
+	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
 	{
 		line[i] = staticbuf[i];
 		i++;
@@ -79,18 +79,17 @@ char	*one_readtxt(char *staticbuf, int fd)
 	ssize_t	bytes_read;
 	char	*tempbuf;
 	
-	staticbuf = (char *)malloc(BUFFER_SIZE + 1);			// allocate A
 	tempbuf = (char *)malloc(BUFFER_SIZE + 1);				// allocate B
 	if (!staticbuf || !tempbuf)
 	{
-		ft_free(&staticbuf);								// free if it fails
+		return (ft_free(&staticbuf));						// free if it fails
 	}
 	tempbuf[0] = '\0';
 	bytes_read = 1;
-	while (bytes_read > 0 && !ft_strchr(tempbuf, '\n'))
+	while (bytes_read == BUFFER_SIZE && !ft_strchr(tempbuf, '\n'))
 	{
 		bytes_read = read(fd, tempbuf, BUFFER_SIZE);
-		staticbuf = ft_strjoin(staticbuf, tempbuf);
+		staticbuf = ft_strjoin(staticbuf, tempbuf);			// allocate A
 		tempbuf[bytes_read] = '\0';
 	}
 	// printf("test buf func = %s\n", buf);
@@ -108,7 +107,8 @@ char	*get_next_line(int fd)
 	// printf("test func one = %s\n", buf);
 	line = two_writeline(staticbuf);
 	// printf("test func two = %s\n", line);
-	staticbuf = three_remainder(staticbuf);
+	if (staticbuf != NULL)
+		staticbuf = three_remainder(staticbuf);
 	return (line);
 }
 
