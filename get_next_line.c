@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/29 17:59:01 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/29 18:20:38 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*one_readtxt(char *staticbuf, int fd)
 	if (!tempbuf)
 		return (ft_free(&staticbuf));
 	tempbuf[0] = '\0';
-	while (bytes_read > 0 && !ft_strchr(tempbuf, '\n'))
+	while (bytes_read > 0 && !ft_strchr(staticbuf, '\n'))
 	{
 		bytes_read = read(fd, tempbuf, BUFFER_SIZE);
 		if (bytes_read > 0)
@@ -107,20 +107,20 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int	fd;
-// 	int	i = 0;
-// 	char *line;
+int	main(void)
+{
+	int	fd;
+	int	i = 0;
+	char *line;
 
-// 	fd = open("text.txt", O_RDONLY);
-// 	while (i < 1)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s\n", line);
-// 		i++;
-// 	}
-// 	free(line);											// free C
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("text1.txt", O_RDONLY);
+	while (i < 11)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		free(line);
+		i++;
+	}
+	close(fd);
+	return (0);
+}
