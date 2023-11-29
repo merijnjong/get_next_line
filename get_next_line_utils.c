@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:47 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/23 18:12:29 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/29 17:46:08 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,17 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
-	size_t	totlen;
 	char	*str;
 
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
-	str = (char *)malloc(i + j + 1);			// allocate
+	str = (char *)malloc(i + j + 1);
 	if (!str)
-		return (NULL);
+		return (ft_free(&s1));
 	str[i + j] = '\0';
 	while (j--)
 	{
@@ -48,12 +47,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	{
 		str[i] = s1[i];
 	}
-	if (s1 != NULL)
-		free((void *)s1);							// free
+	ft_free(&s1);
 	return (str);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 

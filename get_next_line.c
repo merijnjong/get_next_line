@@ -6,13 +6,13 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/23 18:25:08 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/29 17:59:01 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*three_remainder(char *staticbuf)
+char	*three_remainder(char *staticbuf, char **line)
 {
 	int		i;
 	int		j;
@@ -21,56 +21,45 @@ char	*three_remainder(char *staticbuf)
 	i = 0;
 	j = 0;
 	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
-	{
 		i++;
-	}
-	new = (char *)malloc(ft_strlen(staticbuf) - i + 1);		// allocate D
+	if (staticbuf[i] == '\n')
+		i++;
+	if (staticbuf[i] == '\0')
+		return (ft_free(&staticbuf));
+	new = malloc(ft_strlen(staticbuf) - i + 1);
 	if (!new)
 	{
-		return (ft_free(&staticbuf));						// free if it fails
+		ft_free(line);
+		return (ft_free(&staticbuf));
 	}
-	new[0] = '\0';
 	while (staticbuf[i] != '\0')
-	{
-		new[j] = staticbuf[i];
-		i++;
-		j++;
-	}
+		new[j++] = staticbuf[i++];
+	ft_free(&staticbuf);
 	new[j] = '\0';
-	// printf("test func three: %s\n", new);
-	free(staticbuf);								- i +		// free A
-	staticbuf = NULL;
 	return (new);
 }
 
 char	*two_writeline(char *staticbuf)
 {
-	int i;
-	char *line;
+	int		i;
+	int		j;
+	char	*line;
 
 	i = 0;
-	if (!staticbuf)
-	{
-		return (ft_strjoin(line, ""));
-	}
+	j = 0;
 	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
-	{
 		i++;
-	}
-	line = (char *)malloc(i + 1);							// allocate C
+	if (staticbuf[i] == '\n')
+		i++;
+	line = malloc(i + 1);
 	if (!line)
+		return (NULL);
+	while (j < i)
 	{
-		return (ft_free(&staticbuf));						// free if it fails
-	}
-	line[0] = '\0';
-	i = 0;
-	while (staticbuf[i] != '\n' && staticbuf[i] != '\0')
-	{
-		line[i] = staticbuf[i];
-		i++;
+		line[j] = staticbuf[j];
+		j++;
 	}
 	line[i] = '\0';
-	// printf("test fun two: %s\n", line);
 	return (line);
 }
 
@@ -78,23 +67,26 @@ char	*one_readtxt(char *staticbuf, int fd)
 {
 	ssize_t	bytes_read;
 	char	*tempbuf;
-	
-	tempbuf = (char *)malloc(BUFFER_SIZE + 1);				// allocate B
-	if (!staticbuf || !tempbuf)
-	{
-		return (ft_free(&staticbuf));						// free if it fails
-	}
-	tempbuf[0] = '\0';
+
+	tempbuf = (char *)malloc(BUFFER_SIZE + 1);
 	bytes_read = 1;
-	while (bytes_read == BUFFER_SIZE && !ft_strchr(tempbuf, '\n'))
+	if (!tempbuf)
+		return (ft_free(&staticbuf));
+	tempbuf[0] = '\0';
+	while (bytes_read > 0 && !ft_strchr(tempbuf, '\n'))
 	{
 		bytes_read = read(fd, tempbuf, BUFFER_SIZE);
-		staticbuf = ft_strjoin(staticbuf, tempbuf);			// allocate A
-		tempbuf[bytes_read] = '\0';
+		if (bytes_read > 0)
+		{
+			tempbuf[bytes_read] = '\0';
+			staticbuf = ft_strjoin(staticbuf, tempbuf);
+			if (!staticbuf)
+				return (ft_free(&tempbuf));
+		}
 	}
-	// printf("test buf func = %s\n", buf);
-	free(tempbuf);											// free B & D
-	tempbuf = NULL;
+	ft_free(&tempbuf);
+	if (bytes_read < 0)
+		return (ft_free(&staticbuf));
 	return (staticbuf);
 }
 
@@ -103,29 +95,32 @@ char	*get_next_line(int fd)
 	static char	*staticbuf = NULL;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	staticbuf = one_readtxt(staticbuf, fd);
-	// printf("test func one = %s\n", buf);
+	if (staticbuf == NULL)
+		return (NULL);
 	line = two_writeline(staticbuf);
-	// printf("test func two = %s\n", line);
-	if (staticbuf != NULL)
-		staticbuf = three_remainder(staticbuf);
+	if (!line)
+		return (ft_free(&staticbuf));
+	staticbuf = three_remainder(staticbuf, &line);
 	return (line);
 }
 
-int	main(void)
-{
-	int	fd;
-	int	i = 0;
-	char *line;
+// int	main(void)
+// {
+// 	int	fd;
+// 	int	i = 0;
+// 	char *line;
 
-	fd = open("text.txt", O_RDONLY);
-	while (i < 7)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		i++;
-	}
-	free(line);											// free C
-	close(fd);
-	return (0);
-}
+// 	fd = open("text.txt", O_RDONLY);
+// 	while (i < 1)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s\n", line);
+// 		i++;
+// 	}
+// 	free(line);											// free C
+// 	close(fd);
+// 	return (0);
+// }
