@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/30 14:41:55 by mjong            ###   ########.fr       */
+/*   Created: 2023/11/30 14:43:41 by mjong             #+#    #+#             */
+/*   Updated: 2023/11/30 14:46:44 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_remainder(char *staticbuf, char **line)
 {
@@ -92,36 +92,17 @@ char	*read_txt(char *staticbuf, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*staticbuf = NULL;
+	static char	*staticbuf[1024];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	staticbuf = read_txt(staticbuf, fd);
-	if (staticbuf == NULL)
+	staticbuf[fd] = read_txt(staticbuf[fd], fd);
+	if (staticbuf[fd] == NULL)
 		return (NULL);
-	line = write_line(staticbuf);
+	line = write_line(staticbuf[fd]);
 	if (!line)
-		return (ft_free(&staticbuf));
-	staticbuf = get_remainder(staticbuf, &line);
+		return (ft_free(&staticbuf[fd]));
+	staticbuf[fd] = get_remainder(staticbuf[fd], &line);
 	return (line);
 }
-
-// int	main(void)
-// {
-// 	int		fd;
-// 	int		i;
-// 	char	*line;
-
-// 	fd = open("text.txt", O_RDONLY);
-// 	i = 0;
-// 	while (i < 11)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		free(line);
-// 		i++;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }

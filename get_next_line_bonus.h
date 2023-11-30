@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/14 13:07:12 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/30 13:55:06 by mjong            ###   ########.fr       */
+/*   Created: 2023/11/30 14:44:12 by mjong             #+#    #+#             */
+/*   Updated: 2023/11/30 14:44:51 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
