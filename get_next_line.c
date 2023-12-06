@@ -6,7 +6,7 @@
 /*   By: mjong <mjong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 13:06:50 by mjong             #+#    #+#             */
-/*   Updated: 2023/11/30 16:13:17 by mjong            ###   ########.fr       */
+/*   Updated: 2023/11/30 16:30:22 by mjong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*read_txt(char *staticbuf, int fd)
 	bytes_read = 1;
 	if (!tempbuf)
 		return (ft_free(&staticbuf));
-	tempbuf[0] = '\0';
 	while (bytes_read > 0 && !ft_strchr(staticbuf, '\n'))
 	{
 		bytes_read = read(fd, tempbuf, BUFFER_SIZE);
