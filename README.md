@@ -27,7 +27,7 @@ in order to test the code.<br />
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 "files".c<br />
 
 ### Forbidden
-* It is not allowed to use the function library created in the previous project, [libft](https://github.com/merijnjong/libft).
+* It is not allowed to use the function library created in the previous [libft](https://github.com/merijnjong/libft) project.
 * lseek() is forbidden.
 * Global variables are forbidden.<br />
 
