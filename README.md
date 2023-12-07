@@ -39,7 +39,7 @@ able to read<br />from a different fd per call without losing the reading thread
 file descriptor or<br />returning a line from another fd.<br />
 It means that it should be able to call get_next_line() to read from fd 3, then
 fd 4, then 5,<br />then once again 3, once again 4, and so forth.
-* Append the _bonus.[c\h] suffix to the bonus part files.
+* Append the "_bonus.[c\h]" suffix to the bonus part files.
 It means that, in addition to the<br />mandatory part files, the 3 following
 files will be turned in:<br />
 • [get_next_line_bonus.c](https://github.com/merijnjong/get_next_line/blob/main/get_next_line_bonus.c)<br />
