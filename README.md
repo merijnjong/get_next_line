@@ -1,7 +1,7 @@
 # get_next_line
 In this exercise I have to write a function that returns a line read from a file descriptor. 
 Function name | get_next_line |
---- | --- |
+|:--- |:---
 Prototype | char *get_next_line(int fd); |
 Turn in files | [get_next_line.c](https://github.com/merijnjong/get_next_line/blob/main/get_next_line.c), [get_next_line.utils.c](https://github.com/merijnjong/get_next_line/blob/main/get_next_line_utils.c), [get_next_line.h](https://github.com/merijnjong/get_next_line/blob/main/get_next_line.h) |
 Parameters | fd: The file descriptor to read from |
